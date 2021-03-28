@@ -54,7 +54,9 @@ function printChatHistory(){
       let html = "";
       let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
       html = `
-<div class="chat text ${chat.from == 'me' ? "right" : "left"}" where="${chat.cid}" who="${who}">
+<div  class="chat text ${chat.from == 'me' ? "right" : "left"}" 
+      where="${chat.cid}" who="${who}" 
+      style="display: none">
   <img class="pic" src="${pic ? 'https://profile.line-scdn.net/' + pic : ''}">
   <div class="who">
     ${REAL_CONTACT.filter(c => c.cid == who)[0]?.named ?? "" }
@@ -73,7 +75,9 @@ function printChatHistory(){
       let html = "";
       let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
       html = `
-<div class="chat photo ${chat.from == 'me' ? "right" : "left"}" where="${where}" who="${who}">
+<div  class="chat text ${chat.from == 'me' ? "right" : "left"}" 
+      where="${chat.cid}" who="${who}" 
+      style="display: none">
   <img class="pic" src="${pic ? 'https://profile.line-scdn.net/' + pic : ''}">
   <div class="who">
   ${REAL_CONTACT.filter(c => c.cid == who)[0]?.named ?? "" }
@@ -93,7 +97,9 @@ function printChatHistory(){
       let html = "";
       let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
       html = `
-<div class="chat call ${chat.from == 'me' ? "right" : "left"}" where="${where}" who="${who}">
+<div  class="chat text ${chat.from == 'me' ? "right" : "left"}" 
+      where="${chat.cid}" who="${who}" 
+      style="display: none">
   <img class="pic" src="${pic ? 'https://profile.line-scdn.net/' + pic : ''}">
   <div class="who">
   ${REAL_CONTACT.filter(c => c.cid == who)[0]?.named ?? "" }
@@ -116,7 +122,9 @@ function printChatHistory(){
       let html = "";
       let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
       html = `
-<div class="chat sticker ${chat.from == 'me' ? "right" : "left"}" where="${where}" who="${who}">
+<div  class="chat text ${chat.from == 'me' ? "right" : "left"}" 
+      where="${chat.cid}" who="${who}" 
+      style="display: none">
   <img class="pic" src="${pic ? 'https://profile.line-scdn.net/' + pic : ''}">
   <div class="who">
   ${REAL_CONTACT.filter(c => c.cid == who)[0]?.named ?? "" }
@@ -145,6 +153,7 @@ function msgFilter(where, who = null){
       elm.style.display = "none";
     }
   });
+  $chatHistory.scrollTo(0,$chatHistory.scrollHeight);
 }
 
 //DOM event binding

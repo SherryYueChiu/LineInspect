@@ -1,5 +1,12 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
 body {
+  width: 100vw;
+  height: 100vh;
   margin: 0;
+  overflow: hidden;
 }
 
 .container {
@@ -14,6 +21,7 @@ body {
 
 #sideBar {
   width: 30%;
+  height: 100%;
   background: palegoldenrod;
 }
 
@@ -21,7 +29,7 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: .5em;
+  margin: .3em;
   border-bottom: 3px black dashed;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
@@ -44,9 +52,11 @@ body {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   width: 100%;
+  height: 100%;
   font-size: 0.7em;
   -ms-flex-line-pack: start;
       align-content: flex-start;
+  overflow-y: auto;
 }
 
 #contacts .contact {
@@ -63,6 +73,10 @@ body {
   -ms-grid-rows: 1fr auto;
       grid-template-rows: 1fr auto;
   grid-auto-flow: row;
+}
+
+#contacts .contact:last-child {
+  margin-bottom: 10em;
 }
 
 #contacts .contact > .pic {
@@ -111,6 +125,7 @@ body {
   font-size: 0.7em;
   background: #333;
   color: aliceblue;
+  overflow-y: auto;
 }
 
 #chatHistory .left {
