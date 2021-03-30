@@ -29,7 +29,7 @@ body{
     justify-content: center;
     &>*{
       width: fit-content;
-      padding: .5em .7em;
+      padding: .5em .3em;
     }
   }
 }
@@ -164,5 +164,15 @@ body{
     &>.who, &>.pic{
       display: none;
     }
+  }
+}
+
+.chat.call{
+  .duration{
+    padding: 0.7em;
+    background-color: aliceblue;
+    color: black;
+    border-radius: 1em;
+    width: fit-content;
   }
 }

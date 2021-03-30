@@ -42,7 +42,7 @@ body {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  padding: .5em .7em;
+  padding: .5em .3em;
 }
 
 #contacts {
@@ -224,5 +224,15 @@ body {
 
 .chat.right > .who, .chat.right > .pic {
   display: none;
+}
+
+.chat.call .duration {
+  padding: 0.7em;
+  background-color: aliceblue;
+  color: black;
+  border-radius: 1em;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 /*# sourceMappingURL=style.css.map */
