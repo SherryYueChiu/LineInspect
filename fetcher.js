@@ -28,8 +28,10 @@ const db = require('better-sqlite3')('LINE_LITE.db');
 const db2 = require('better-sqlite3')('CHAT.db');
 
 //stored information
-var chat_history = [];
-var REAL_CONTACT = [];
+chat_history = [];
+REAL_CONTACT = [];
+REAL_CHAT = [];
+REAL_ROOM = [];
 
 //chat history: read database and format information
 function getChatHistory() {
@@ -80,7 +82,6 @@ function getChatHistory() {
         else if(compare(bytes.slice(i, i + jpgTail.length), jpgTail)){
           pointerRight = i;
           image = bytes.slice(pointerLeft, pointerRight);
-          console.log(pointerLeft, pointerRight)
           image = "data:image/jpeg;base64,"+ btoa(image);
         }
         //png found
@@ -131,7 +132,6 @@ function getChatHistory() {
         else if(compare(bytes.slice(i, i + _STKPKGID.length), _STKPKGID)){
           pointerRight = i - 4;
           stkid = bytes.slice(pointerLeft, pointerRight);
-          //console.log(pointerLeft, pointerRight )
           pointerLeft = i + _STKPKGID.length + 4;
         }
         else if(!!stkid && i > pointerLeft && 
@@ -154,6 +154,7 @@ function getChatHistory() {
     }
   }
 }
+
 //contacts: read database and format information
 function getContact() {
   const _REAL_CONTACT = db.prepare('SELECT _key, _val FROM REAL_CONTACT');
@@ -253,16 +254,108 @@ function getContact() {
   }
 }
 
-//contacts: read database and write file
+//groups: read database and format information
+function getGroup(){
+  const _REAL_CHAT = db.prepare('SELECT _key, _val FROM REAL_CHAT');
+  for (const group of _REAL_CHAT.iterate()) {
+    var bytes = Uint8Array.from(group._val);
+    let byteStr = new TextDecoder().decode(bytes);
+    let pointerLeft = 0, pointerRight = 0;
+    let cid = group._key;
+    let named = null;
+    let pic = null;
+    let host = null;
+    let members = null;
+    
+    for(let i in bytes){
+      i = parseInt(i);
+      if(i < 0x40)  continue;
+      else if(!named){
+        if( pointerLeft == 0 &&
+            (bytes[i] == 0x0A || bytes[i] == 0x0B) &&
+            (bytes[i + 1] == 0x00) &&
+            (bytes[i + 2] <= 0x99 && bytes[i + 2] != 0x00) &&
+            (bytes[i + 3] == 0x00) &&
+            (bytes[i + 4] == 0x00) &&
+            (bytes[i + 5] == 0x00) &&
+            (bytes[i + 6] <= 0xff && bytes[i + 6] != 0x00)){
+          pointerLeft = i + 7;
+        }
+        else if((bytes[i] == 0x0A || bytes[i] == 0x0B) &&
+                (bytes[i + 1] == 0x00) &&
+                (bytes[i + 2] <= 0x99 && bytes[i + 2] != 0x00) &&
+                (bytes[i + 3] == 0x00) &&
+                (bytes[i + 4] == 0x00) &&
+                (bytes[i + 5] == 0x00) &&
+                (bytes[i + 6] <= 0xff && bytes[i + 6] != 0x00)){
+          pointerRight = i;
+          named = bytes.slice(pointerLeft, pointerRight);
+        }
+      }
+    }
+    //translate to string
+    cid = byteStr.match(/c[a-zA-z0-9]{32}/)?.[0];
+    named = new TextDecoder().decode(new Uint8Array(named));
+    pic = byteStr.match(/0h-[a-zA-z0-9]{75}/)?.[0];
+    host = byteStr.match(/u[a-zA-z0-9]{32}/)?.[0];
+    members = byteStr.match(/u[a-zA-z0-9]{32}/g).slice(1);
+
+    //store them
+    REAL_CHAT.push({
+      cid: cid,
+      named: named,
+      pic: pic,
+      host: host,
+      members: members
+    });
+  }
+}
+
+//room: read database and format information
+function getRoom(){
+  const _REAL_ROOM = db.prepare('SELECT _key, _val FROM REAL_ROOM');
+  for (const room of _REAL_ROOM.iterate()) {
+    var bytes = Uint8Array.from(room._val);
+    let byteStr = new TextDecoder().decode(bytes);
+    let pointerLeft = 0, pointerRight = 0;
+    let cid = room._key;
+    let members = null;
+    
+    members = byteStr.match(/u[a-zA-z0-9]{32}/g);
+
+    //store them
+    REAL_ROOM.push({
+      cid: cid,
+      members: members
+    });
+  }
+  console.log(REAL_ROOM)
+}
+
+//Chat history: read database and write file
+getChatHistory();
+fs.writeFile('chatHistory.js', "chat_history = " + JSON.stringify(chat_history), (err) => {
+  if (err)  throw err;
+  console.log("chat history is saved.");
+});
+
+//Contacts: read database and write file
 getContact();
 fs.writeFile('contacts.js', "REAL_CONTACT = " + JSON.stringify(REAL_CONTACT), (err) => {
   if (err)  throw err;
   console.log("contacts is saved.");
 });
 
-//chat history: read database and write file
-getChatHistory();
-fs.writeFile('chatHistory.js', "chat_history = " + JSON.stringify(chat_history), (err) => {
+//Groups: read database and write file
+getGroup();
+fs.writeFile('groups.js', "REAL_CHAT = " + JSON.stringify(REAL_CHAT), (err) => {
   if (err)  throw err;
-  console.log("chat history is saved.");
+  console.log("groups is saved.");
+});
+
+//Rooms: read database and write file
+getRoom();
+fs.writeFile('rooms.js', "REAL_ROOM = " + JSON.stringify(REAL_ROOM), (err) => {
+  if (err)  throw err;
+  console.log("rooms is saved.");
 });

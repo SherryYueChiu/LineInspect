@@ -50,13 +50,15 @@ function printChatHistory(){
     if(who.indexOf("u") != 0){
       who = chat.cid2;
     }
+
+    //Text
     if(chat.type == "text"){
       let html = "";
       let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
       html = `
 <div  class="chat text ${chat.from == 'me' ? "right" : "left"}" 
       where="${chat.cid}" who="${who}" 
-      style="display: none">
+      style="display: ">
   <img class="pic" src="${pic ? 'https://profile.line-scdn.net/' + pic : ''}">
   <div class="who">
     ${REAL_CONTACT.filter(c => c.cid == who)[0]?.named ?? "" }
@@ -71,11 +73,13 @@ function printChatHistory(){
       `;
       $chatHistory.insertAdjacentHTML('beforeend', html); 
     }
+
+    //Photo
     else if(chat.type == "photo"){
       let html = "";
       let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
       html = `
-<div  class="chat text ${chat.from == 'me' ? "right" : "left"}" 
+<div  class="chat photo ${chat.from == 'me' ? "right" : "left"}" 
       where="${chat.cid}" who="${who}" 
       style="display: none">
   <img class="pic" src="${pic ? 'https://profile.line-scdn.net/' + pic : ''}">
@@ -93,11 +97,13 @@ function printChatHistory(){
       $chatHistory.insertAdjacentHTML('beforeend', html); 
 
     }
+
+    //Call
     else if(chat.type == "call"){
       let html = "";
       let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
       html = `
-<div  class="chat text ${chat.from == 'me' ? "right" : "left"}" 
+<div  class="chat call ${chat.from == 'me' ? "right" : "left"}" 
       where="${chat.cid}" who="${who}" 
       style="display: none">
   <img class="pic" src="${pic ? 'https://profile.line-scdn.net/' + pic : ''}">
@@ -105,7 +111,9 @@ function printChatHistory(){
   ${REAL_CONTACT.filter(c => c.cid == who)[0]?.named ?? "" }
   </div>
   <div class="duration">
-    ${chat.duration}
+    <i class="fas fa-phone-alt"></i>
+    ${Math.floor((chat.duration / 1000) / 60)}分
+    ${Math.floor((chat.duration / 1000) % 60)}秒
   </div>
   <div class="time">
     ${new Date(chat.time).Format("yyyy-MM-dd HH:mm")}
@@ -118,11 +126,13 @@ function printChatHistory(){
       $chatHistory.insertAdjacentHTML('beforeend', html); 
 
     }
+
+    //Sticker
     else if(chat.type == "sticker"){
       let html = "";
       let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
       html = `
-<div  class="chat text ${chat.from == 'me' ? "right" : "left"}" 
+<div  class="chat sticker ${chat.from == 'me' ? "right" : "left"}" 
       where="${chat.cid}" who="${who}" 
       style="display: none">
   <img class="pic" src="${pic ? 'https://profile.line-scdn.net/' + pic : ''}">
