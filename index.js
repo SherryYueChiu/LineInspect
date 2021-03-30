@@ -36,7 +36,7 @@ function printChatHistory(){
       html = `
 <div  class="chat text ${chat.from == 'me' ? "right" : "left"}" 
       where="${chat.cid}" who="${who}" 
-      style="display: ">
+      style="display: none">
   <img class="pic" src="${pic ? 'https://profile.line-scdn.net/' + pic : ''}">
   <div class="who">
     ${REAL_CONTACT.filter(c => c.cid == who)[0]?.named ?? "" }
