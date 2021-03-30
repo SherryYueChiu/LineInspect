@@ -2,7 +2,7 @@
 
 ## Database Structure
 
-### REAL_CONTACT
+### Aavailable contacts(REAL_CONTACT)
 
 ```
 0B 00 01 00 00 00 21
@@ -22,13 +22,21 @@ pic[78]
 
 ```
 
-### REAL_GROUP
+### Groups(REAL_JOINED_GROUP)
 
 ```
-
+cid[33]
+...
+name[?]
+...
+pic
+...
+members[32]
+...
+members[32]...
 ```
 
-### chat_history
+### Chat history(chat_history)
 
 | Type | Format       |
 | ---- | ------------ |
@@ -43,7 +51,7 @@ pic[78]
 
 
 
-## Link
+## Assets Links
 
 ### Sticker
 
