@@ -329,7 +329,7 @@ function getRoom(){
       members: members
     });
   }
-  console.log(REAL_ROOM)
+  //console.log(REAL_ROOM)
 }
 
 //Chat history: read database and write file

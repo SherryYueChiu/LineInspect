@@ -17,31 +17,9 @@ Date.prototype.Format = function (fmt) {
   }
 
 
-$contact = document.querySelector("#contacts");
 $chatHistory = document.querySelector("#chatHistory");
-  
-function printContact(){
-  REAL_CONTACT.forEach(contact => {
-    let html = `
-<div class="contact" who="${contact.cid}">
-  <img class="pic" src="${contact.pic ? 'https://profile.line-scdn.net/' + contact.pic : ''}">
-  <div class="named">${contact.named}
-    <div class="named2">${contact.named2 ? "(" + contact.named2 + ")" : ""}</div>
-  </div>
-  <div class="intro">${contact.intro}</div>
-</div>
-    `;
-    $contact.insertAdjacentHTML('beforeend', html);
-  });
-  //bind events
-  $contacts = document.querySelectorAll("#contacts>.contact");
-  $contacts?.forEach((elm) => {
-    elm.addEventListener("click", () => {
-      const who = elm.getAttribute("who");
-      msgFilter(who);
-    });
-  });
-}
+$contact = document.querySelector("#contacts");
+$group = document.querySelector("#groups");
 
 function printChatHistory(){
   chat_history.forEach((chat) => {
@@ -152,6 +130,69 @@ function printChatHistory(){
     }
   });
 }
+  
+function printContacts(){
+  REAL_CONTACT.forEach(contact => {
+    let html = `
+<div class="contact" who="${contact.cid}">
+  <img class="pic" src="${contact.pic ? 'https://profile.line-scdn.net/' + contact.pic : ''}">
+  <div class="named">${contact.named}
+    <div class="named2">${contact.named2 ? "(" + contact.named2 + ")" : ""}</div>
+  </div>
+  <div class="intro">${contact.intro}</div>
+</div>
+    `;
+    $contact.insertAdjacentHTML('beforeend', html);
+  });
+  //bind events
+  $contacts = document.querySelectorAll("#contacts>.contact");
+  $contacts?.forEach((elm) => {
+    elm.addEventListener("click", () => {
+      const who = elm.getAttribute("who");
+      msgFilter(who);
+    });
+  });
+}
+  
+function printGroups(){
+  REAL_CHAT.forEach(group => {
+    let html = `
+<div class="group" where="${group.cid}">
+  <img class="pic" src="${group.pic ? 'https://profile.line-scdn.net/' + group.pic : ''}">
+  <div class="named">${group.named}</div>
+</div>
+    `;
+    $group.insertAdjacentHTML('beforeend', html);
+  });
+  //bind events
+  $groups = document.querySelectorAll("#groups>.group");
+  $groups?.forEach((elm) => {
+    elm.addEventListener("click", () => {
+      const where = elm.getAttribute("where");
+      msgFilter(where);
+    });
+  });
+}
+  
+function printRooms(){
+  REAL_ROOM.forEach(room => {
+    let html = `
+<div class="room" where="${room.cid}">
+  <img class="pic" src="${room.pic ? 'https://profile.line-scdn.net/' + room.pic : ''}">
+  <div class="named">${room.named}</div>
+</div>
+    `;
+    $group.insertAdjacentHTML('beforeend', html);
+  });
+  //bind events
+  $rooms = document.querySelectorAll("#groups>.room");
+  $rooms?.forEach((elm) => {
+    elm.addEventListener("click", () => {
+      const where = elm.getAttribute("where");
+      msgFilter(where);
+    });
+  });
+}
 
 function msgFilter(where, who = null){
   $chats = document.querySelectorAll("#chatHistory>.chat");
@@ -181,5 +222,7 @@ $tabGroup.addEventListener("click", () => {
 });
 
 //init
-printContact();
 printChatHistory();
+printContacts();
+printGroups();
+printRooms();

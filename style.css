@@ -45,6 +45,23 @@ body {
   padding: .5em .3em;
 }
 
+#chatHistory {
+  width: 70%;
+  padding: 1em;
+  font-size: 0.7em;
+  background: #333;
+  color: aliceblue;
+  overflow-y: auto;
+}
+
+#chatHistory .left {
+  margin-right: auto;
+}
+
+#chatHistory .right {
+  margin-left: auto;
+}
+
 #contacts {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -119,21 +136,62 @@ body {
   grid-row-end: 3;
 }
 
-#chatHistory {
-  width: 70%;
-  padding: 1em;
+#groups {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
   font-size: 0.7em;
-  background: #333;
-  color: aliceblue;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
   overflow-y: auto;
 }
 
-#chatHistory .left {
-  margin-right: auto;
+#groups .group {
+  display: -ms-grid;
+  display: grid;
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: .3em;
+  margin: .3em;
+  -ms-grid-columns: 6em auto;
+      grid-template-columns: 6em auto;
+  -ms-grid-rows: 1fr auto;
+      grid-template-rows: 1fr auto;
+  grid-auto-flow: row;
 }
 
-#chatHistory .right {
-  margin-left: auto;
+#groups .group:last-child {
+  margin-bottom: 10em;
+}
+
+#groups .group > .pic {
+  width: 4em;
+  height: 4em;
+  margin: .5em;
+  border-radius: 50%;
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 2;
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+#groups .group > .named {
+  padding: .3em;
+  font-size: larger;
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 3;
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  grid-row-end: 2;
 }
 
 .chat {
