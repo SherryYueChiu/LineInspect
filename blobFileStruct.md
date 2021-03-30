@@ -22,7 +22,7 @@ pic[78]
 
 ```
 
-### Groups(REAL_JOINED_GROUP)
+### Groups(REAL_CHAT)
 
 ```
 cid[33]

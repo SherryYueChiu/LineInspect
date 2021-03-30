@@ -143,8 +143,11 @@ body{
     grid-row-end: 3;
   }
   .image{
-    max-width: 300px;
-    max-height: 600px;
+	&>&{
+		max-width: 300px;
+		max-height: 600px;
+		margin-left: -4em;
+	}
   }
   &.text{
     &>.msg{
