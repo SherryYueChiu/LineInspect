@@ -1,1 +1,1 @@
-REAL_ROOM = []
+REAL_ROOM = [{"cid":"rd17899ed2b1d01fc0a3aeab2c1d8af7c","members":["u085311ecd9e3e3d74ae4c9f5437cbcb5"]}]

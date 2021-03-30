@@ -21,11 +21,16 @@ $chatHistory = document.querySelector("#chatHistory");
 $contact = document.querySelector("#contacts");
 $group = document.querySelector("#groups");
 
+function getNameByID(cid){
+  if(cid.indexOf("u") == 0) return REAL_CONTACT.filter(c => c.cid == cid)[0]?.named ?? null;
+  if(cid.indexOf("c") == 0) return REAL_CHAT.filter(c => c.cid == cid)[0]?.named ?? null;
+}
+
 function printChatHistory(){
-  chat_history.forEach((chat) => {
+  chat_history.forEach(async (chat) => {
     //message in group chat
-    let who = where = REAL_CONTACT.filter(c => c.cid == chat.cid)[0]?.named ?? "";
-    if(who.indexOf("u") != 0){
+    let who = where = await getNameByID(chat.cid);
+    if(who?.indexOf("u") != 0){
       who = chat.cid2;
     }
 
@@ -175,11 +180,25 @@ function printGroups(){
 }
   
 function printRooms(){
-  REAL_ROOM.forEach(room => {
+  REAL_ROOM.forEach(async (room) => {
+    let named = "";
+    if(room.members.length > 3){
+      named += await getNameByID(room.members[0]);
+      named += ", " + await getNameByID(room.members[1]);
+      named += ", " + await getNameByID(room.members[2]);
+      named += " 和其他" + (room.members.length - 3) + "人";
+    }
+    else{
+      room.members.forEach((member, i) => {
+        if(i > 0) named += ", ";
+        named += getNameByID(member);
+      });
+    }
+
     let html = `
 <div class="room" where="${room.cid}">
-  <img class="pic" src="${room.pic ? 'https://profile.line-scdn.net/' + room.pic : ''}">
-  <div class="named">${room.named}</div>
+  <div class="pic"><i class="far fa-comments"></i></div>
+  <div class="named">${named}</div>
 </div>
     `;
     $group.insertAdjacentHTML('beforeend', html);

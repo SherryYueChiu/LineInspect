@@ -194,6 +194,57 @@ body {
   grid-row-end: 2;
 }
 
+#groups .room {
+  display: -ms-grid;
+  display: grid;
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: .3em;
+  margin: .3em;
+  -ms-grid-columns: 6em auto;
+      grid-template-columns: 6em auto;
+  -ms-grid-rows: 1fr auto;
+      grid-template-rows: 1fr auto;
+  grid-auto-flow: row;
+}
+
+#groups .room:last-child {
+  margin-bottom: 10em;
+}
+
+#groups .room > .pic {
+  width: 4em;
+  height: 4em;
+  margin: .5em;
+  border-radius: 50%;
+  background: #333;
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 2;
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+#groups .room > .pic > svg {
+  padding: .4em 0 0 .4em;
+  font-size: 2em;
+  color: antiquewhite;
+}
+
+#groups .room > .named {
+  padding: .3em;
+  font-size: larger;
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 3;
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  grid-row-end: 2;
+}
+
 .chat {
   display: -ms-grid;
   display: grid;

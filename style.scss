@@ -140,7 +140,44 @@ body{
       grid-row-start: 1;
       grid-row-end: 2;
     }
-  } 
+  }
+  .room{
+    display: grid;
+    width: 100%;
+    height: fit-content;
+    padding: .3em;
+    margin: .3em;
+    grid-template-columns: 6em auto;
+    grid-template-rows: 1fr auto;
+    grid-auto-flow: row;
+    &:last-child{
+      margin-bottom: 10em;
+    }
+    &>.pic{
+      width: 4em;
+      height: 4em;
+      margin: .5em;
+      border-radius: 50%;
+      background: #333;
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 1;
+      grid-row-end: 3;
+      &>svg{
+        padding: .4em 0 0 .4em;
+        font-size: 2em;
+        color: antiquewhite;
+      }
+    }
+    &>.named{
+      padding: .3em;
+      font-size: larger;
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+  }
 }
 
 .chat{
