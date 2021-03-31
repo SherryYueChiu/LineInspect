@@ -24,6 +24,13 @@ $group = document.querySelector("#groups");
 function getNameByID(cid){
   if(cid.indexOf("u") == 0) return REAL_CONTACT.filter(c => c.cid == cid)[0]?.named ?? null;
   if(cid.indexOf("c") == 0) return REAL_CHAT.filter(c => c.cid == cid)[0]?.named ?? null;
+  return null;
+}
+
+function getPicByID(cid){
+  if(cid.indexOf("u") == 0) return REAL_CONTACT.filter(c => c.cid == cid)[0]?.pic ?? null;
+  if(cid.indexOf("c") == 0) return REAL_CHAT.filter(c => c.cid == cid)[0]?.pic ?? null;
+  return null;
 }
 
 function printChatHistory(){
@@ -37,7 +44,7 @@ function printChatHistory(){
     //Text
     if(chat.type == "text"){
       let html = "";
-      let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
+      let pic = getPicByID(who);
       html = `
 <div  class="chat text ${chat.from == 'me' ? "right" : "left"}" 
       where="${chat.cid}" who="${who}" 
@@ -60,7 +67,7 @@ function printChatHistory(){
     //Photo
     else if(chat.type == "photo"){
       let html = "";
-      let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
+      let pic = getPicByID(who);
       html = `
 <div  class="chat photo ${chat.from == 'me' ? "right" : "left"}" 
       where="${chat.cid}" who="${who}" 
@@ -81,10 +88,32 @@ function printChatHistory(){
 
     }
 
+    else if(chat.type == "video"){
+      let html = "";
+      let pic = getPicByID(who);
+      html = `
+<div  class="chat video ${chat.from == 'me' ? "right" : "left"}" 
+      where="${chat.cid}" who="${who}" 
+      style="display: none">
+  <img class="pic" src="${pic ? 'https://profile.line-scdn.net/' + pic : ''}">
+  <div class="who">
+  ${REAL_CONTACT.filter(c => c.cid == who)[0]?.named ?? "" }
+  </div>
+  <div class="video">
+    <i class="fas fa-photo-video"></i> 目前無法取得影片
+  </div>
+  <div class="time">
+    ${new Date(chat.time).Format("yyyy-MM-dd HH:mm")}
+  </div>
+</div>
+      `;
+      $chatHistory.insertAdjacentHTML('beforeend', html); 
+    }
+
     //Call
     else if(chat.type == "call"){
       let html = "";
-      let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
+      let pic = getPicByID(who);
       html = `
 <div  class="chat call ${chat.from == 'me' ? "right" : "left"}" 
       where="${chat.cid}" who="${who}" 
@@ -107,13 +136,12 @@ function printChatHistory(){
 </div>
       `;
       $chatHistory.insertAdjacentHTML('beforeend', html); 
-
     }
 
     //Sticker
     else if(chat.type == "sticker"){
       let html = "";
-      let pic = REAL_CONTACT.filter(c => c.cid == who)[0]?.pic;
+      let pic = getPicByID(who);
       html = `
 <div  class="chat sticker ${chat.from == 'me' ? "right" : "left"}" 
       where="${chat.cid}" who="${who}" 

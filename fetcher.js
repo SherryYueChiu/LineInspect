@@ -101,7 +101,19 @@ function getChatHistory() {
         image: image
       });
     }
-    //TODO Video
+
+    //Video
+    if(chat.type == "2"){
+      type = "video";
+      chat_history.push({
+        type: type,
+        from: from,
+        cid: cid,
+        cid2: cid2,
+        time: time
+      });
+    }
+
     //Call
     else if(chat.type == "6"){
       type = "call";
@@ -117,6 +129,7 @@ function getChatHistory() {
         status: status
       });
     }
+
     //Sticker
     else if(chat.type == "7"){
       type = "sticker";
@@ -155,7 +168,7 @@ function getChatHistory() {
   }
 }
 
-//contacts: read database and format information
+//Contacts: read database and format information
 function getContact() {
   const _REAL_CONTACT = db.prepare('SELECT _key, _val FROM REAL_CONTACT');
   for (const contact of _REAL_CONTACT.iterate()) {
@@ -254,7 +267,7 @@ function getContact() {
   }
 }
 
-//groups: read database and format information
+//Groups: read database and format information
 function getGroup(){
   const _REAL_CHAT = db.prepare('SELECT _key, _val FROM REAL_CHAT');
   for (const group of _REAL_CHAT.iterate()) {

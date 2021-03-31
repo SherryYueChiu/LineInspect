@@ -50,11 +50,17 @@ members[33]...
 
 ### Chat history(chat_history)
 
-| Type | Format       |
-| ---- | ------------ |
-| 0    | Text / Photo |
-| 6    | Call         |
-| 7    | Sticker      |
+
+
+| Type | Format     |
+| ---- | ---------- |
+| -2   | Leave chat |
+| -1   | Join Chat  |
+| 0    | Text       |
+| 1    | Photo      |
+| 2    | Video      |
+| 6    | Call       |
+| 7    | Sticker    |
 
 | Status | Who   |
 | ------ | ----- |
