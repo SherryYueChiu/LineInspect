@@ -182,15 +182,16 @@ function printGroups(){
 function printRooms(){
   REAL_ROOM.forEach(async (room) => {
     let named = "";
-    if(room.members.length > 3){
-      named += await getNameByID(room.members[0]);
+    if(room.members.length > 2){
+      named += "你, " + await getNameByID(room.members[0]);
       named += ", " + await getNameByID(room.members[1]);
-      named += ", " + await getNameByID(room.members[2]);
-      named += " 和其他" + (room.members.length - 3) + "人";
+      named += " 和其他 " + (room.members.length - 2) + "人";
     }
     else{
+	  named += "你";
       room.members.forEach((member, i) => {
-        if(i > 0) named += ", ";
+        if(i == room.members.length - 1) named += " 和 ";
+        else named += ", ";
         named += getNameByID(member);
       });
     }
